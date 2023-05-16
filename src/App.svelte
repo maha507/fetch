@@ -1,25 +1,65 @@
 <script>
-  import { onMount } from "svelte";
-  import Grid from "gridjs-svelte"
-  const endpoint = "https://jsonplaceholder.typicode.com/posts";
-  let posts = [];
 
-  onMount(async function () {
-    const response = await fetch(endpoint);
-    const data = await response.json();
-    console.log(data);
-  });
+      import { onMount } from "svelte";
+      let jsonData = [];
   
-  export let name;
-</script>
-
-<main>
-  <h1>click the data</h1>
-  <p>Visit the <a href="https://api.recruitly.io/api/job?apiKey=TEST64518616D4CF145D4E20BD47169EA7229BA3">data</a> for more details.</p>
-
-  {#each posts as article}
-    <div>
-      <p>{article.title}</p>
-    </div>
-  {/each}
-</main>
+     onMount(async () => {
+  
+        const response = await fetch("https://api.recruitly.io/api/job?apiKey=TEST64518616D4CF145D4E20BD47169EA7229BA3");
+        const responseData = await response.json();
+        jsonData = responseData.data;
+  
+      });
+  
+    </script>
+     <main>
+  
+    {#if jsonData.length > 0}
+  
+       <div class="grid-container">
+  
+         {#each jsonData as item}
+  
+          {#each Object.entries(item) as [key, value]}
+  
+            <div class="grid-item">
+  
+               <span>{key}: </span>
+  
+             <span>{typeof value === 'object' ? JSON.stringify(value) : value}</span>
+  
+           </div>
+  
+         {/each}
+  
+       {/each}
+  
+     </div>
+  
+   {/if}
+  
+   </main>
+  
+   <style>
+  
+   main {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 30px;
+   }
+  
+   .grid-container {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+   gap: 10px;
+   width: 100%;
+  }
+  
+  .grid-item {
+   border: 2px solid #ddd;
+   padding: 10px;
+   text-align: left;
+   }
+  
+</style>
