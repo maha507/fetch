@@ -10,57 +10,25 @@
     const responseData = await response.json();
     jsonData = responseData.data;
   });
-
- 
 </script>
 
 <main>
-  {#if jsonData.length > 0}
-    <div class="grid-container">
-      {#each jsonData as item}
-        <div class="grid-item">
-          <span class="heading">title</span>
-          <span>{item.title}</span>
-        </div>
-        <div class="grid-item">
-          <span class="heading">reference</span>
-          <span>{item.reference}</span>
-        </div>
-        <div class="grid-item">
-          <span class="heading">status</span>
-          <span>{item.status}</span>
-        </div>
-      {/each}
-    </div>
-   
-  {/if}
-</main>
-
-
-<style>
-  main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 10px;
-    width: 50%;
-  }
-
-  .grid-item {
-    border: 1px solid #ddd;
-    padding: 5px;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .heading {
-    font-weight: bold;
-  }
+  <Grid
+  search 
+  sort
+  pagination={{ enabled: true, limit: 10 }}
+  data={jsonData.map(item => {
+    
+    return {
+      title: item.title,
+      reference: item.reference,
+      status: item.status
+    }
+  })} />
+    </main>
+  
+<style global>
+  @import "https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css";
 </style>
+
+
