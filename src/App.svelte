@@ -32,7 +32,7 @@
     <Grid
       search
       sort
-      pagination={{ enabled: true, limit: 10 }}
+      pagination={{ enabled: true, limit: 38 }}
       data={jsonData.map(item => ({
         title: item.title,
         reference: item.reference,
